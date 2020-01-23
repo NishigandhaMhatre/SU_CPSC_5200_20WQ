@@ -146,8 +146,6 @@ namespace restapi.Controllers
             }
         }
 
-        //------------------------------------------------------------------------------------------------
-
         // Added route to getLine in a timecard
         [HttpGet("{id:guid}/lines/{lid:guid}")]
         [Produces(ContentTypes.TimesheetLine)]
@@ -206,6 +204,7 @@ namespace restapi.Controllers
             }
         }
 
+        // Added route to update items in a line in timecard
         [HttpPatch("{id:guid}/lines/{lid:guid}")]
         [Produces(ContentTypes.TimesheetLine)]
         [ProducesResponseType(typeof(IEnumerable<Transition>), 200)]
