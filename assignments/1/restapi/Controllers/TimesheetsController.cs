@@ -184,7 +184,7 @@ namespace restapi.Controllers
 
             if (timecard != null)
             {
-                // ToDo: check for all status
+                
                 if (timecard.Status != TimecardStatus.Draft)
                 {
                     return StatusCode(409, new InvalidStateError() { });
