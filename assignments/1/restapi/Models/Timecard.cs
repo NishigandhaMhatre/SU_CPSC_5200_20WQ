@@ -90,6 +90,14 @@ namespace restapi.Models
                         Reference = $"/timesheets/{UniqueIdentifier}/lines"
                     });
 
+                    links.Add(new ActionLink()
+                    { 
+                        Method = Method.Delete,
+                        Type = ContentTypes.Deletion,
+                        Relationship = ActionRelationship.Delete,
+                        Reference = $"/timesheets/{UniqueIdentifier}/deletion"
+                    });
+
                     break;
 
                 case TimecardStatus.Submitted:
@@ -124,7 +132,13 @@ namespace restapi.Models
                     break;
 
                 case TimecardStatus.Cancelled:
-                    // terminal state, nothing possible here
+                    links.Add(new ActionLink()
+                    {
+                        Method = Method.Delete,
+                        Type = ContentTypes.Deletion,
+                        Relationship = ActionRelationship.Delete,
+                        Reference = $"/timesheets/{UniqueIdentifier}/deletion"
+                    });
                     break;
             }
 
@@ -172,6 +186,29 @@ namespace restapi.Models
         {
             var annotatedLine = new TimecardLine(documentLine);
 
+            Lines.Add(annotatedLine);
+
+            return annotatedLine;
+        }
+
+        // Added method to replace line in a timecard.
+        public TimecardLine ReplaceLine(DocumentLine documentLine, Guid id)
+        {
+            var annotatedLine = new TimecardLine(documentLine)
+            {
+                UniqueIdentifier = id
+            };
+
+            Lines.Add(annotatedLine);
+
+            return annotatedLine;
+        }
+
+        public TimecardLine UpdateLine(TimecardLine currentLine, DocumentLine documentLine, Guid id)
+        {
+
+            var annotatedLine = currentLine;
+            annotatedLine.Patch(currentLine, documentLine);
             Lines.Add(annotatedLine);
 
             return annotatedLine;

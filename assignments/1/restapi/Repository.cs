@@ -42,6 +42,7 @@ namespace restapi
             using (var database = new LiteDatabase(DATABASE_FILE))
             {
                 var timesheets = database.GetCollection<Timecard>("timesheets");
+                var lines = database.GetCollection<TimecardLine>();
 
                 timecard = timesheets
                     .FindOne(t => t.UniqueIdentifier == id);
@@ -49,6 +50,7 @@ namespace restapi
 
             return timecard;
         }
+
 
         public void Add(Timecard timecard)
         {

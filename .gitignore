@@ -7,3 +7,5 @@ bin/
 obj/
 timesheets.db
 ~*
+/.vs
+/assignments/1/restapi/.vs

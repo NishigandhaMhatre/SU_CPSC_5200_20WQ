@@ -40,6 +40,36 @@ namespace restapi.Models
             return this;
         }
 
+        // Added method to update items in line in a timecard
+        public TimecardLine Patch(TimecardLine currentLine, DocumentLine line)
+        {
+            if(line.Week != 0 && line.Week != currentLine.Week)
+            {
+                currentLine.Week = line.Week;
+            }
+            if (line.Year != 0 && line.Year != currentLine.Year)
+            {
+                currentLine.Year = line.Year;
+            }
+            if (line.Day != 0 && line.Day != currentLine.Day)
+            {
+                currentLine.Day = line.Day;
+            }
+            if (line.Hours != 0 && line.Hours != currentLine.Hours)
+            {
+                currentLine.Hours = line.Hours;
+            }
+            if (line.Project != null && line.Project != ""  && line.Project != currentLine.Project)
+            {
+                currentLine.Project = line.Project;
+            }
+
+            currentLine.Updated = DateTime.UtcNow;
+            return currentLine;
+        }
+
+     
+
         // public TimecardLine Update(JObject line)
         // {
         //     // this is a little too brittle for my taste because of the
