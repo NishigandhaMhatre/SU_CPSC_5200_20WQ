@@ -172,7 +172,7 @@ namespace restapi.Controllers
         }
 
         //Added route to Replace line with a new line in the timecard
-        [HttpPost("{id:guid}/lines/{lid:guid}")]
+        [HttpPost("{id:guid}/lines/{lid:guid}/replace")]
         [Produces(ContentTypes.TimesheetLine)]
         [ProducesResponseType(typeof(IEnumerable<Transition>), 200)]
         [ProducesResponseType(404)]
@@ -205,7 +205,7 @@ namespace restapi.Controllers
         }
 
         // Added route to update items in a line in timecard
-        [HttpPatch("{id:guid}/lines/{lid:guid}")]
+        [HttpPatch("{id:guid}/lines/{lid:guid}/update")]
         [Produces(ContentTypes.TimesheetLine)]
         [ProducesResponseType(typeof(IEnumerable<Transition>), 200)]
         [ProducesResponseType(404)]

@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using Newtonsoft.Json;
 using restapi.Helpers;
+using System.Collections.Generic;
 
 namespace restapi.Models
 {
@@ -128,6 +129,9 @@ namespace restapi.Models
 
         public string PeriodTo => periodTo.ToString("yyyy-MM-dd");
 
+        [JsonProperty("actions")]
+        public IList<DocumentLink> Documents { get => GetDocumentLinks(); }
+
         public string Version { get; set; } = "line-0.1";
 
         private static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
@@ -162,5 +166,27 @@ namespace restapi.Models
         {
             return PublicJsonSerializer.SerializeObjectIndented(this);
         }
+
+        private IList<DocumentLink> GetDocumentLinks()
+        {
+            var links = new List<DocumentLink>();
+            links.Add(new DocumentLink()
+            {
+                Method = Method.Post,
+                Type = ContentTypes.TimesheetLine,
+                Relationship = DocumentRelationship.Lines,
+                Reference = $"/lines/{UniqueIdentifier}/replace"
+            });
+            links.Add(new DocumentLink()
+            {
+                Method = Method.Patch,
+                Type = ContentTypes.TimesheetLine,
+                Relationship = DocumentRelationship.Lines,
+                Reference = $"/lines/{UniqueIdentifier}/update"
+            });
+
+            return links;
+        }
+
     }
 }
